@@ -1,16 +1,19 @@
 import React from "react";
+import Link from "next/link"; // Import the Link component from Next.js
+
 import {
   CalendarIcon,
   FolderIcon,
   HomeIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-// define a NavItem prop
+
 export type NavItem = {
   label: string;
   href: string;
   icon: React.ReactNode;
 };
+
 export const defaultNavItems: NavItem[] = [
   {
     label: "Dashboard",
@@ -18,18 +21,8 @@ export const defaultNavItems: NavItem[] = [
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {
-    label: "Team",
-    href: "/team",
+    label: "Terms",
+    href: "./terms.tsx", // Update the href to "/terms.tsx"
     icon: <UserGroupIcon className="w-6 h-6" />,
-  },
-  {
-    label: "Projects",
-    href: "/projects",
-    icon: <FolderIcon className="w-6 h-6" />,
-  },
-  {
-    label: "Calendar",
-    href: "/calendar",
-    icon: <CalendarIcon className="w-6 h-6" />,
   },
 ];

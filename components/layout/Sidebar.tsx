@@ -25,10 +25,10 @@ const Sidebar = ({
   return (
     <div
       className={classNames({
-        "bg-indigo-700 text-zinc-50 fixed md:static md:translate-x-0 z-20":
+        "bg-[#2B124C] text-zinc-50 fixed md:static md:translate-x-0 z-20":
           true,
         "transition-all duration-300 ease-in-out": true,
-        "w-[300px]": !collapsed,
+        "w-[150px]": !collapsed,
         "w-16": collapsed,
         "-translate-x-full": !shown,
       })}
@@ -47,7 +47,12 @@ const Sidebar = ({
             "py-4 justify-center": collapsed,
           })}
         >
-          {!collapsed && <span className="whitespace-nowrap">My Logo</span>}
+          {!collapsed && (
+  <span className="whitespace-nowrap text-lg font-bold text-white-500">
+    suk madik
+  </span>
+)}
+
           <button
             className="grid place-content-center hover:bg-indigo-800 w-10 h-10 rounded-full opacity-0 md:opacity-100"
             onClick={() => setCollapsed(!collapsed)}
@@ -85,10 +90,17 @@ const Sidebar = ({
             "grid place-content-stretch p-4 ": true,
           })}
         >
+          <div className="relative">
+  <div className="flex gap-4 items-center h-11 overflow-hidden">
+    {/* Your Image and content here */}
+  </div>
+  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-black to-transparent"></div>
+</div>
+
           <div className="flex gap-4 items-center h-11 overflow-hidden">
             <Image
               src={
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                "https://images.unsplash.com/photo-1580128660010-fd027e1e587a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
               }
               height={36}
               width={36}
