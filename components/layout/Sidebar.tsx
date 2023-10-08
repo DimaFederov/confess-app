@@ -1,124 +1,100 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
 import Image from "next/image";
-import { defaultNavItems, NavItem } from "./defaultNavItems";
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-} from "@heroicons/react/24/outline";
+import { defaultNavItems } from "./defaultNavItems";
+import { useOnClickOutside } from "usehooks-ts";
 
-// add NavItem prop to component prop
-type Props = {
-  collapsed: boolean;
-  navItems?: NavItem[];
-  setCollapsed(collapsed: boolean): void;
-  shown: boolean;
+export type NavItem = {
+  label: string;
+  href: string;
+  icon: React.ReactNode;
 };
-const Sidebar = ({
-  collapsed,
-  navItems = defaultNavItems,
-  shown,
-  setCollapsed,
-}: Props) => {
-  const Icon = collapsed ? ChevronDoubleRightIcon : ChevronDoubleLeftIcon;
+
+type Props = {
+  open: boolean;
+  navItems?: NavItem[];
+  setOpen(open: boolean): void;
+};
+
+const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [startX, setStartX] = useState<number | null>(null);
+
+  useOnClickOutside(ref, () => {
+    setOpen(false);
+  });
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startX !== null) {
+      const deltaX = e.touches[0].clientX - startX;
+      if (deltaX < -50) {
+        setOpen(false);
+        setStartX(null);
+      }
+    }
+  };
+
   return (
     <div
       className={classNames({
-        "bg-[#2B124C] text-zinc-50 fixed md:static md:translate-x-0 z-20":
-          true,
-        "transition-all duration-300 ease-in-out": true,
-        "w-[150px]": !collapsed,
-        "w-16": collapsed,
-        "-translate-x-full": !shown,
+        "flex flex-col justify-between": true,
+        "bg-[#072E33] text-zinc-50": true,
+        "md:w-full md:sticky md:top-16 md:z-0 top-0 z-20 fixed": true,
+        "md:h-[calc(100vh-_64px)] h-full w-[300px]": true,
+        "transition-transform 1s ease-in-out md:-translate-x-0": true, // 1-second transition duration
+        "-translate-x-full": !open,
       })}
+      ref={ref}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={() => setStartX(null)}
     >
-      <div
-        className={classNames({
-          "flex flex-col justify-between h-screen sticky inset-0 w-full": true,
-        })}
-      >
-        {/* logo and collapse button */}
-        <div
-          className={classNames({
-            "flex items-center border-b border-b-indigo-800 transition-none":
-              true,
-            "p-4 justify-between": !collapsed,
-            "py-4 justify-center": collapsed,
-          })}
-        >
-          {!collapsed && (
-  <span className="whitespace-nowrap text-lg font-bold text-white-500">
-    suk madik
-  </span>
-)}
-
-          <button
-            className="grid place-content-center hover:bg-indigo-800 w-10 h-10 rounded-full opacity-0 md:opacity-100"
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            <Icon className="w-5 h-5" />
-          </button>
-        </div>
-        <nav className="flex-grow">
-          <ul
-            className={classNames({
-              "my-2 flex flex-col gap-2 items-stretch": true,
-            })}
-          >
-            {navItems.map((item, index) => {
-              return (
+      <nav className="md:sticky top-0 md:top-16">
+        <ul className="py-2 flex flex-col gap-2">
+          {navItems.map((item, index) => {
+            return (
+              <Link key={index} href={item.href}>
                 <li
-                  key={index}
                   className={classNames({
-                    "text-indigo-100 hover:bg-indigo-900 flex": true, //colors
-                    "transition-colors duration-300": true, //animation
-                    "rounded-md p-2 mx-3 gap-4 ": !collapsed,
-                    "rounded-full p-2 mx-3 w-10 h-10": collapsed,
+                    "text-indigo-100 hover:bg-indigo-900": true,
+                    "flex gap-4 items-center ": true,
+                    "transition-colors duration-300": true,
+                    "rounded-md p-2 mx-2": true,
                   })}
                 >
-                  <Link href={item.href} className="flex gap-2">
-                    {item.icon} <span>{!collapsed && item.label}</span>
-                  </Link>
+                  {item.icon} {item.label}
                 </li>
-              );
-            })}
-          </ul>
-        </nav>
-        <div
-          className={classNames({
-            "grid place-content-stretch p-4 ": true,
+              </Link>
+            );
           })}
-        >
-          <div className="relative">
-  <div className="flex gap-4 items-center h-11 overflow-hidden">
-    {/* Your Image and content here */}
-  </div>
-  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-black to-transparent"></div>
-</div>
-
-          <div className="flex gap-4 items-center h-11 overflow-hidden">
-            <Image
-              src={
-                "https://images.unsplash.com/photo-1580128660010-fd027e1e587a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
-              }
-              height={36}
-              width={36}
-              alt="profile image"
-              className="rounded-full"
-            />
-            {!collapsed && (
-              <div className="flex flex-col ">
-                <span className="text-indigo-50 my-0">Tom Cook</span>
-                <Link href="/" className="text-indigo-200 text-sm">
-                  View Profile
-                </Link>
-              </div>
-            )}
+        </ul>
+      </nav>
+      <div className="border-t border-t-indigo-800 p-4">
+        <div className="flex gap-4 items-center">
+          <Image
+            src={
+              "https://images.unsplash.com/photo-1579118286738-600b51590ba4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGd0YXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            }
+            height={6}
+            width={36}
+            alt="profile image"
+            className="rounded-full"
+          />
+          <div className="flex flex-col">
+          <span className="text-indigo-50 my-0 font-bold">Vendetta</span>
+            <Link href="/" className="text-indigo-200 text-sm">
+              View Profile
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default Sidebar;
