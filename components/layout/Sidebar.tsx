@@ -45,7 +45,7 @@ const Sidebar = ({ open, navItems = defaultNavItems, setOpen }: Props) => {
         "flex flex-col justify-between": true,
         "bg-[#072E33] text-zinc-50": true,
         "md:w-full md:sticky md:top-16 md:z-0 top-0 z-20 fixed": true,
-        "md:h-[calc(100vh-_64px)] h-full w-[300px]": true,
+        "md:h-[calc(100vh-_64px)] h-full w-[200px]": true,
         "transition-transform 1s ease-in-out md:-translate-x-0": true, // 1-second transition duration
         "-translate-x-full": !open,
       })}

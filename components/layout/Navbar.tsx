@@ -17,9 +17,6 @@ const Navbar = (props: Props) => {
     >
       <div className="font-bold text-lg">Confessions</div>
       <div className="flex-grow"></div>
-      <button className="md:hidden" onClick={props.onMenuButtonClick}>
-        <Bars3Icon className="h-6 w-6" />
-      </button>
     </nav>
   );
 };
