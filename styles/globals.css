@@ -6,6 +6,10 @@
 /* global.css */
 /* ... (previous styles) */
 
+body {
+  background-color: #0b0a08;
+}
+
 .floating-button {
     position: fixed;
     bottom: 50px;
@@ -13,9 +17,9 @@
     transform: translateX(-50%); /* Adjust to center horizontally */
   }
   
-  .floating-button button {
-    background-color: #0d549b;
-    color: white;
+  .floatingButtonStyle button {
+    background-color: #984da0;
+    color: rgb(226, 8, 8);
     border: none;
     border-radius: 15px; /* Adjust the border-radius to control the button's smoothness */
     width: 110px;
@@ -24,6 +28,20 @@
     cursor: pointer;
     transition: background-color 0.5s;
   }
+
+  /* styles.css */
+/* styles.css */
+.floating-button {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  background: #d603ee; /* Change the background color to RGB(54, 159, 255) */
+  padding: 10px;
+  width: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
   
   .floating-button button:hover {
     background-color: #ff6f61;
@@ -33,4 +51,10 @@
 .font-anton {
     font-family: 'Anton', sans-serif;
   }
+
+  /* Disable the focus outline */
+*:focus {
+  outline: none;
+}
+
   
