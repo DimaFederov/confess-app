@@ -57,4 +57,18 @@ body {
   outline: none;
 }
 
-  
+.bg-image {
+  background-image: url('/pages/Images/wallpaper.png'); /* Adjust the path as needed */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content {
+  /* Your styles for the page content go here */
+}

@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model EditorContent {
+  id         Int       @id @default(autoincrement())
+  html       String
+  text       String
+  imageLink  String?   // New column for storing image links (nullable)
+}
