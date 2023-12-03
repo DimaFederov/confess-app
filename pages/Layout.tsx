@@ -1,3 +1,4 @@
+// Import necessary components and modules
 import React, { PropsWithChildren, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
@@ -6,6 +7,7 @@ import { useRouter } from "next/router";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 
+// Layout component
 const Layout = (props: PropsWithChildren) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
@@ -20,10 +22,11 @@ const Layout = (props: PropsWithChildren) => {
       <style>
         {`
           body {
-         }   background: linear-gradient(to bottom, #0C2075, #0F969C);
-          
+            background: linear-gradient(to bottom, #000000, #1E1234, #120C22);
+          }
         `}
       </style>
+
       <div>
         <Navbar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} />
       </div>
@@ -33,6 +36,20 @@ const Layout = (props: PropsWithChildren) => {
         <div className="md:ml-[300px]">
           {props.children}
         </div>
+
+        
+<div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}>
+  <Link legacyBehavior href="/editor">
+    <a className="bn29"> {/* Apply bn29 class to the anchor tag */}
+      <button>
+        <PencilSquareIcon className="h-6 w-6 text-white" />
+      </button>
+    </a>
+  </Link>
+</div>
+
+
+
       </div>
     </div>
   );

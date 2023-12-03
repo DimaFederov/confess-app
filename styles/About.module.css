@@ -1,9 +1,21 @@
 /* About.module.css */
 .postBox {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    color: white; /* Set text color to white */
+  border: 1px solid #888;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: white;
+  max-width: 600px;
+}
+
+/* Add some top margin to the first postBox */
+.postBox:first-child {
+  margin-top: 80px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .postBox {
+    max-width: 99%;
   }
-  
+}

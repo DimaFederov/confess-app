@@ -4,13 +4,13 @@ import supabase from './utils/supabase';
 import styles from '../styles/About.module.css'; // Import your CSS module
 
 export default function About() {
-  const [data, setData] = useState<string[]>([]);
+  const [data, setData] = useState<any[]>([]); // Change the type to 'any[]' to accommodate both text and id
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data, error } = await supabase.from('EditorContent').select('text');
+        const { data, error } = await supabase.from('EditorContent').select('id, text'); // Fetch both columns
 
         if (error) {
           throw new Error(error.message);
@@ -21,12 +21,15 @@ export default function About() {
           throw new Error('Invalid data structure');
         }
 
-        const textValues = data.map((item) => item.text);
-        console.log('Text Data:', textValues);
-        setData(textValues);
+        console.log('Fetched Data:', data);
+        setData(data);
       } catch (error) {
+        let errorMessage = "Failed to do something exceptional";
+        if (error instanceof Error) {
+          errorMessage = error.message;
         console.error('Error fetching data:', error.message);
         setError(error.message);
+        }
       }
     };
 
@@ -39,8 +42,11 @@ export default function About() {
 
   return (
     <div>
-      {data.map((text, index) => (
-        <p key={index} className={styles.postBox}>{text}</p>
+      {data.map((item, index) => (
+        <div key={index} className={styles.postBox}>
+          <p>ID: {item.id}</p>
+          <p>{item.text}</p>
+        </div>
       ))}
     </div>
   );
